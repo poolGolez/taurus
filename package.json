@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pool Golez",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "connect": "^3.6.6",
+    "node": "^11.5.0"
+  }
 }
