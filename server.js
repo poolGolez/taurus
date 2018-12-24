@@ -1,14 +1,13 @@
-var connect = require('connect');
+var express = require('express');
+var {logger} = require('./server-utils');
 
+var BookController = require('./controllers/BookController');
+var bookController = new BookController();
 
-function log(request, response, next) {
-    console.log(request.method, request.url);
-    response.writeHead(200, {'Content-Type': 'application/json'});
-    response.end();
-    next();
-}
-var app = connect()
-    .use(log)
-    .listen(3000);
+var app = express();
+app.use(logger);
 
+bookController.buildApi(app);
+
+app.listen(3000);
 console.log('Server running at http://localhost');
