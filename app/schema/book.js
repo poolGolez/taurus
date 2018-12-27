@@ -11,5 +11,9 @@ var bookSchema = new mongoose.Schema({
     }
 });
 
+bookSchema.methods.isActive = function() {
+    return this.status !== 'DELETED';
+}
+
 
 module.exports = mongoose.model('Book', bookSchema);

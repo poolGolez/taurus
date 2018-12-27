@@ -3,12 +3,12 @@ var mongoose = require('mongoose');
 var Book = require('./../schema/book');
 
 
-function BookRepository() {}
+function BookRepository() {
+    mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });    
+}
 
 async function save(properties) {
     try {
-        mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
-        var db = mongoose.connection;
         const book = new Book({
             id: properties.id,
             title: properties.title
@@ -22,12 +22,7 @@ async function save(properties) {
 
 async function findAll() {
     try {
-        mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
-        var db = mongoose.connection;
-
-        var books = await Book.find({}).exec();
-        db.close();
-
+        var books = await Book.find({ 'status': { '$ne': 'DELETED' } }).exec();
         return books;
     } catch(err) {
         throw err;
@@ -36,13 +31,8 @@ async function findAll() {
 
 async function find(id) {
     try {
-        mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
-        var db = mongoose.connection;
-
-        var books = await Book.find({ _id: id }).exec();
-        db.close();
-
-        return books[0];
+        var book = await Book.findOne({ _id: id }).exec();
+        return book;
     } catch(err) {
         throw err;
     }
@@ -50,12 +40,7 @@ async function find(id) {
 
 async function remove(book) {
     try {
-        mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
-        var db = mongoose.connection;
-
-        book.status = 'DELETED';
-        await book.save()
-        db.close();
+        await Book.findOneAndUpdate({ _id: book._id }, { status: 'DELETED' });
     } catch(err) {
         throw err;
     }

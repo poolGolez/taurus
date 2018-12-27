@@ -14,7 +14,7 @@ BookController.prototype.buildApi = function(router) {
         .param('bookId', (function(repository) {
             return async function(req, res, next, bookId) {
                 var book = await repository.find(bookId);
-                if(book) {
+                if(book && book.isActive()) {
                     req.book = book;
                     next();
                 } else {
