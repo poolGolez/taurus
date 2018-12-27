@@ -9,6 +9,8 @@
   "author": "Pool Golez",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "connect": "^3.6.6",
     "express": "^4.16.4",
     "mocha": "^5.2.0",
