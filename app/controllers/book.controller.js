@@ -4,62 +4,58 @@ function BookController() {
     this.bookRepository = new BookRepository();
 }
 
-BookController.prototype.buildApi = function(router) {
-    router.route('/books')
-        .get(listBooks(this.bookRepository))
-        .post(saveBook(this.bookRepository))
-    ;
+BookController.prototype.save = function() {
+    repository = this.bookRepository;
+    return async function(request, response, next) {
+        const bookProperties = request.body;
+        var book = await repository.save(bookProperties);
 
-    router
-        .param('bookId', (function(repository) {
-            return async function(req, res, next, bookId) {
-                var book = await repository.find(bookId);
-                if(book && book.isActive()) {
-                    req.book = book;
-                    next();
-                } else {
-                    next(new Error('Book not found'));
-                }
-            }
-        })(this.bookRepository))
-        .route('/books/:bookId')
-        .get(showBook())
-        .delete(deleteBook(this.bookRepository))
-    ;
-
-    function saveBook(repository) {
-        return async function(request, response) {
-            const bookProperties = request.body;
-            var book = await repository.save(bookProperties);
-
-            response.statusCode = 201;
-            response.end(JSON.stringify(book));
-        }
+        response.statusCode = 201;
+        response.end(JSON.stringify(book));
+        next();
     }
-
-    function listBooks(repository) {
-        return async function (request, response) {
-            var books =  await repository.findAll();
-            response.set('Content-Type', 'application/json');
-            response.end(JSON.stringify(books));
-        };
-    }
-
-    function showBook() {
-        return async function(request, response, next) {
-            response.end(JSON.stringify(request.book));
-        }
-    }
-
-    function deleteBook(repository) {
-        return async function(request, response) {
-            repository.remove(request.book);
-
-            response.writeHead(204, { 'Content-type' : 'application/json' });
-            response.end();
-        }
-    }
-
 }
+
+BookController.prototype.list = function() {
+    repository = this.bookRepository;
+    return async function (request, response, next) {
+        var books =  await repository.findAll();
+        response.end(JSON.stringify(books));
+        next();
+    };
+}
+
+BookController.prototype.fetchParameter = function() {
+    repository = this.bookRepository;
+    return async function(request, response, next, id) {
+        var book = await repository.find(id);
+
+        if(book && book.isActive()) {
+            request.book = book;
+            next();
+        } else {
+            let error = new Error("Book not found");
+            next(error);
+        }
+    }
+}
+
+BookController.prototype.show = function() {
+    return async function(request, response, next) {
+        response.end(JSON.stringify(request.book));
+        next();
+    }
+}
+
+BookController.prototype.delete = function() {
+    return async function(request, response, next) {
+        await repository.remove(request.book)
+
+        response.writeHead(204, {'Content-type': 'applicaiton/json'});
+        response.end();
+        next();
+    }
+}
+
 
 module.exports = BookController;
