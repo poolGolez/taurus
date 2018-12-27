@@ -4,18 +4,21 @@
   "description": "A simple book tracking system",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app/server.js",
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "author": "Pool Golez",
   "license": "ISC",
   "dependencies": {
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.0",
     "connect": "^3.6.6",
     "express": "^4.16.4",
-    "mocha": "^5.2.0",
     "moment": "^2.23.0",
     "mongoose": "^5.4.0",
     "node": "^11.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0"
   }
 }
