@@ -1,4 +1,4 @@
-var BookRepository = require('./../repository/BookRepository');
+var BookRepository = require('../repository/book.repository');
 
 function BookController() {
     this.bookRepository = new BookRepository();

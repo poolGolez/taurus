@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var Book = require('./../schema/book');
+var Book = require('../schema/book');
 
 
 function BookRepository() {

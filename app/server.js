@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var {logger} = require('../server-utils');
 
-var BookController = require('./controllers/BookController');
+var BookController = require('./controllers/book.controller');
 var bookController = new BookController();
 
 var app = express();
