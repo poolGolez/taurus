@@ -15,7 +15,7 @@ BookController.prototype.buildApi = function(router) {
             return async function(req, res, next, bookId) {
                 var book = await repository.find(bookId);
                 if(book) {
-                    req.book = book
+                    req.book = book;
                     next();
                 } else {
                     next(new Error('Book not found'));
@@ -24,8 +24,8 @@ BookController.prototype.buildApi = function(router) {
         })(this.bookRepository))
         .route('/books/:bookId')
         .get(showBook())
+        .delete(deleteBook(this.bookRepository))
     ;
-
 
     function saveBook(repository) {
         return async function(request, response) {
@@ -48,6 +48,15 @@ BookController.prototype.buildApi = function(router) {
     function showBook() {
         return async function(request, response, next) {
             response.end(JSON.stringify(request.book));
+        }
+    }
+
+    function deleteBook(repository) {
+        return async function(request, response) {
+            repository.remove(request.book);
+
+            response.writeHead(204, { 'Content-type' : 'application/json' });
+            response.end();
         }
     }
 

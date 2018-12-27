@@ -33,6 +33,7 @@ async function findAll() {
         throw err;
     }
 }
+
 async function find(id) {
     try {
         mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
@@ -47,8 +48,22 @@ async function find(id) {
     }
 }
 
+async function remove(book) {
+    try {
+        mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
+        var db = mongoose.connection;
+
+        book.status = 'DELETED';
+        await book.save()
+        db.close();
+    } catch(err) {
+        throw err;
+    }
+}
+
 BookRepository.prototype.save = save;
 BookRepository.prototype.findAll = findAll;
 BookRepository.prototype.find = find;
+BookRepository.prototype.remove = remove;
 
 module.exports = BookRepository;
