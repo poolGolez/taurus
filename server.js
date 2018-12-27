@@ -6,10 +6,12 @@ var BookController = require('./controllers/BookController');
 var bookController = new BookController();
 
 var app = express();
+var router = express.Router();
 app.use(logger);
 app.use(bodyParser.json())
 
-bookController.buildApi(app);
+bookController.buildApi(router);
+app.use(router);
 
 app.listen(3000);
 console.log('Server running at http://localhost');

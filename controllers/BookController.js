@@ -4,10 +4,26 @@ function BookController() {
     this.bookRepository = new BookRepository();
 }
 
-BookController.prototype.buildApi = function(app) {
-    app.route('/books')
+BookController.prototype.buildApi = function(router) {
+    router.route('/books')
         .get(listBooks(this.bookRepository))
         .post(saveBook(this.bookRepository))
+    ;
+
+    router
+        .param('bookId', (function(repository) {
+            return async function(req, res, next, bookId) {
+                var book = await repository.find(bookId);
+                if(book) {
+                    req.book = book
+                    next();
+                } else {
+                    next(new Error('Book not found'));
+                }
+            }
+        })(this.bookRepository))
+        .route('/books/:bookId')
+        .get(showBook())
     ;
 
 
@@ -27,6 +43,12 @@ BookController.prototype.buildApi = function(app) {
             response.set('Content-Type', 'application/json');
             response.end(JSON.stringify(books));
         };
+    }
+
+    function showBook() {
+        return async function(request, response, next) {
+            response.end(JSON.stringify(request.book));
+        }
     }
 
 }
