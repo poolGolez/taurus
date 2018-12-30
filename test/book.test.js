@@ -68,7 +68,7 @@ describe('Books API', function() {
 
     describe('GET /api/v1/books/:bookId', function() {
 
-        it('should return HTTP NOT FOUND status if the book does not exists', function(done) {
+        it('should return HTTP NOT FOUND status if the book does not exist', function(done) {
             chai.request(server)
                 .get('/api/v1/books/5c287e020e15c61949e6b138')
                 .end(function(_, response) {

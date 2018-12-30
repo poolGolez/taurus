@@ -20,7 +20,6 @@ BookController.prototype.save = function() {
 BookController.prototype.list = function() {
     const repository = this.bookRepository;
     return async function (request, response, next) {
-        console.log(repository);
         var books =  await repository.findAll();
 
         response.setHeader('Content-Type', 'application/json');

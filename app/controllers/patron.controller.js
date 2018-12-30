@@ -8,6 +8,8 @@ PatronController.prototype.list = function() {
     const repository = this.patronRepository;
     return async function(request, response, next) {
         var patrons = await repository.findAll();
+        
+        response.setHeader('Content-type', 'application/json');
         response.end(JSON.stringify(patrons));
 
         next();
