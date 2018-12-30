@@ -13,7 +13,6 @@ var router = express.Router();
 app.use(logger);
 app.use(bodyParser.json())
 
-// bookController.buildApi(router);
 bookApi.addRoutes(router);
 app.use(router);
 
