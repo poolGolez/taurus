@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app/server.js",
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "clear && ./node_modules/mocha/bin/mocha"
   },
   "author": "Pool Golez",
   "license": "ISC",

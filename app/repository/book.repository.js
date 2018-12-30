@@ -30,12 +30,8 @@ async function findAll() {
 }
 
 async function find(id) {
-    try {
-        var book = await Book.findOne({ _id: id }).exec();
-        return book;
-    } catch(err) {
-        throw err;
-    }
+    var book = await Book.findOne({ _id: id }).exec();
+    return book;
 }
 
 async function remove(book) {

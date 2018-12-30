@@ -10,7 +10,7 @@ var bookApi = new BookApi();
 
 var app = express();
 var router = express.Router();
-app.use(logger);
+// app.use(logger);
 app.use(bodyParser.json())
 
 bookApi.addRoutes(router);
