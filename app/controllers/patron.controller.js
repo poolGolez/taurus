@@ -5,7 +5,7 @@ function PatronController() {
 }
 
 PatronController.prototype.list = function() {
-    repository = this.patronRepository;
+    const repository = this.patronRepository;
     return async function(request, response, next) {
         var patrons = await repository.findAll();
         response.end(JSON.stringify(patrons));
@@ -15,8 +15,8 @@ PatronController.prototype.list = function() {
 }
 
 PatronController.prototype.fetchParameter = function() {
-    repository = this.patronRepository;
-    return async function(request, response, next) {
+    const repository = this.patronRepository;
+    return async function(request, response, next, id) {
         var patron = await repository.find(id);
 
         if(patron) {
@@ -30,7 +30,7 @@ PatronController.prototype.fetchParameter = function() {
 }
 
 PatronController.prototype.show = function() {
-    repository = this.patronRepository;
+    const repository = this.patronRepository;
     return async function(request, response, next) {
         response.statusCode = 200;
         response.setHeader('Content-Type', 'application/json');
@@ -40,7 +40,7 @@ PatronController.prototype.show = function() {
 }
 
 PatronController.prototype.save = function() {
-    repository = this.patronRepository;
+    const repository = this.patronRepository;
     return async function(request, response, next) {
         const properties = request.body;
         var patron = await repository.save(properties);
