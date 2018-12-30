@@ -5,14 +5,14 @@ function BookApi() {
 }
 
 BookApi.prototype.addRoutes = function(router) {
-    router.route('/books')
+    router.route('/api/v1/books')
         .post(this.controller.save())
         .get(this.controller.list())
     ;
 
     router
         .param('bookId', this.controller.fetchParameter())
-        .route('/books/:bookId')
+        .route('/api/v1/books/:bookId')
             .get(this.controller.show())
             .delete(this.controller.delete())
     ;

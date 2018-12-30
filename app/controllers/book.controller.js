@@ -11,6 +11,7 @@ BookController.prototype.save = function() {
         var book = await repository.save(bookProperties);
 
         response.statusCode = 201;
+        response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify(book));
         next();
     }
@@ -20,6 +21,8 @@ BookController.prototype.list = function() {
     repository = this.bookRepository;
     return async function (request, response, next) {
         var books =  await repository.findAll();
+
+        response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify(books));
         next();
     };
@@ -35,13 +38,15 @@ BookController.prototype.fetchParameter = function() {
             next();
         } else {
             let error = new Error("Book not found");
-            next(error);
+            response.writeHead(404, {'Content-Type': 'application/json'});
+            response.end();
         }
     }
 }
 
 BookController.prototype.show = function() {
     return async function(request, response, next) {
+        response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify(request.book));
         next();
     }
