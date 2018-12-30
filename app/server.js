@@ -19,3 +19,5 @@ app.use(router);
 
 app.listen(3000);
 console.log('Server running at http://localhost');
+
+module.exports = app;
