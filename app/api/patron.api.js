@@ -13,7 +13,7 @@ PatronApi.prototype.addRoutes = function (router) {
     router
         .param('patronId', this.controller.fetchParameter())
         .route('/api/v1/patrons/:patronId')
-            // .get(this.controller.show())
+            .get(this.controller.show())
     ;
 }
 
