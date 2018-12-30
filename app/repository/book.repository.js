@@ -4,7 +4,7 @@ var Book = require('../schema/book');
 
 
 function BookRepository() {
-    mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });    
+    mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
 }
 
 async function save(properties) {
@@ -27,11 +27,7 @@ async function find(id) {
 }
 
 async function remove(book) {
-    try {
-        await Book.findOneAndUpdate({ _id: book._id }, { status: 'DELETED' });
-    } catch(err) {
-        throw err;
-    }
+    await Book.findOneAndUpdate({ _id: book._id }, { status: 'DELETED' });
 }
 
 BookRepository.prototype.save = save;
