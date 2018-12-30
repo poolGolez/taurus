@@ -17,12 +17,8 @@ async function save(properties) {
 }
 
 async function findAll() {
-    try {
-        var books = await Book.find({ 'status': { '$ne': 'DELETED' } }).exec();
-        return books;
-    } catch(err) {
-        throw err;
-    }
+    var books = await Book.find({ 'status': { '$ne': 'DELETED' } }).exec();
+    return books;
 }
 
 async function find(id) {
