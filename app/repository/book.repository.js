@@ -8,16 +8,12 @@ function BookRepository() {
 }
 
 async function save(properties) {
-    try {
-        const book = new Book({
-            id: properties.id,
-            title: properties.title
-        });
-        await book.save();
-        return book;
-    } catch(err) {
-        throw err;
-    }
+    const book = new Book({
+        id: properties.id,
+        title: properties.title
+    });
+    await book.save();
+    return book;
 }
 
 async function findAll() {
