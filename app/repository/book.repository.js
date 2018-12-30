@@ -4,29 +4,21 @@ var Book = require('../schema/book');
 
 
 function BookRepository() {
-    mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });    
+    mongoose.connect('mongodb://localhost:27017/taurus', { useNewUrlParser: true });
 }
 
 async function save(properties) {
-    try {
-        const book = new Book({
-            id: properties.id,
-            title: properties.title
-        });
-        await book.save();
-        return book;
-    } catch(err) {
-        throw err;
-    }
+    const book = new Book({
+        id: properties.id,
+        title: properties.title
+    });
+    await book.save();
+    return book;
 }
 
 async function findAll() {
-    try {
-        var books = await Book.find({ 'status': { '$ne': 'DELETED' } }).exec();
-        return books;
-    } catch(err) {
-        throw err;
-    }
+    var books = await Book.find({ 'status': { '$ne': 'DELETED' } }).exec();
+    return books;
 }
 
 async function find(id) {
@@ -35,11 +27,7 @@ async function find(id) {
 }
 
 async function remove(book) {
-    try {
-        await Book.findOneAndUpdate({ _id: book._id }, { status: 'DELETED' });
-    } catch(err) {
-        throw err;
-    }
+    await Book.findOneAndUpdate({ _id: book._id }, { status: 'DELETED' });
 }
 
 BookRepository.prototype.save = save;

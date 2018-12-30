@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node app/server.js",
-    "test": "clear && ./node_modules/mocha/bin/mocha"
+    "test": "clear && ./node_modules/mocha/bin/mocha",
+    "test-coverage": "clear && nyc --reporter=text ./node_modules/mocha/bin/mocha"
   },
   "author": "Pool Golez",
   "license": "ISC",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0"
   }
 }

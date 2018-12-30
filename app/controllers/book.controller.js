@@ -5,11 +5,11 @@ function BookController() {
 }
 
 BookController.prototype.save = function() {
-    repository = this.bookRepository;
+    const repository = this.bookRepository;
     return async function(request, response, next) {
         const bookProperties = request.body;
         var book = await repository.save(bookProperties);
-
+        
         response.statusCode = 201;
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify(book));
@@ -18,7 +18,7 @@ BookController.prototype.save = function() {
 }
 
 BookController.prototype.list = function() {
-    repository = this.bookRepository;
+    const repository = this.bookRepository;
     return async function (request, response, next) {
         var books =  await repository.findAll();
 
@@ -29,7 +29,7 @@ BookController.prototype.list = function() {
 }
 
 BookController.prototype.fetchParameter = function() {
-    repository = this.bookRepository;
+    const repository = this.bookRepository;
     return async function(request, response, next, id) {
         var book = await repository.find(id);
 
@@ -45,6 +45,7 @@ BookController.prototype.fetchParameter = function() {
 }
 
 BookController.prototype.show = function() {
+    const repository = this.bookRepository;
     return async function(request, response, next) {
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify(request.book));
@@ -53,6 +54,7 @@ BookController.prototype.show = function() {
 }
 
 BookController.prototype.delete = function() {
+    const repository = this.bookRepository;    
     return async function(request, response, next) {
         await repository.remove(request.book)
 
