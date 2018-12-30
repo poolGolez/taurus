@@ -2,11 +2,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var {logger} = require('./server-utils');
 
-var BookController = require('./controllers/book.controller');
-var bookController = new BookController();
-
-var BookApi = require('./api/book.api.js');
+var BookApi = require('./api/book.api');
 var bookApi = new BookApi();
+
+var PatronApi = require('./api/patron.api');
+const patronApi = new PatronApi();
 
 var app = express();
 var router = express.Router();
@@ -14,6 +14,7 @@ var router = express.Router();
 app.use(bodyParser.json())
 
 bookApi.addRoutes(router);
+patronApi.addRoutes(router);
 app.use(router);
 
 app.listen(3000);
