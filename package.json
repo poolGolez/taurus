@@ -15,7 +15,8 @@
     "express": "^4.16.4",
     "moment": "^2.23.0",
     "mongoose": "^5.4.0",
-    "node": "^11.5.0"
+    "node": "^11.5.0",
+    "node-cron": "^2.0.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

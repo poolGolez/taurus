@@ -20,4 +20,7 @@ app.use(router);
 app.listen(3000);
 console.log('Server running at http://localhost');
 
+
+const cr = require('./cron/test.cron');
+cr.start();
 module.exports = app;
