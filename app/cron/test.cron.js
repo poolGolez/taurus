@@ -3,9 +3,9 @@ const curl = require('curl');
 const {JSDOM} = require('jsdom');
 const jQuery = require('jquery');
 
-const queue = require('../service/booklist.queue.js');
+const queue = require('../queue/booklist.queue.js');
 
-const config = { scheduled: true }
+const config = { scheduled: false };
 
 const job = cron.schedule('* * * * *', function() {
     console.log('running from cron job');
@@ -16,10 +16,11 @@ const job = cron.schedule('* * * * *', function() {
         if(error || response.statusCode !== 200) {
             console.error('Some error occured', error);
         } else {
-            console.log(`Retrieved HTML from ${task.url}`);
+            console.log(`Retrieved HTML from ${url}`);
             const lastPage = extractLastPage(responseBody);
 
             for(let page = 1; page <= lastPage; page++) {
+                console.log('pushing to ', `${url}?page=${page}`)
                 queue.push({
                     url: `${url}?page=${page}`
                 })
@@ -35,5 +36,7 @@ const job = cron.schedule('* * * * *', function() {
         return lastPage;
     }
 }, config);
+
+job.start();
 
 module.exports = job;
