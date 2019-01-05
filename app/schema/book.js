@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 
 var bookSchema = new mongoose.Schema({
-    'id': 'string',
-    'title': 'string',
+    'title': String,
+    'author': String,
+    'price': Number,
+    'imageUrl': String,
     'status': {
         type: String,
         enum: [ 'AVAILABLE', 'DELETED' ],
