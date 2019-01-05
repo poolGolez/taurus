@@ -9,8 +9,11 @@ function BookRepository() {
 
 async function save(properties) {
     const book = new Book({
-        id: properties.id,
-        title: properties.title
+        // id: properties.id,
+        title: properties.title,
+        author: properties.author,
+        price: properties.price,
+        imageUrl: properties.imageUrl
     });
     await book.save();
     return book;
@@ -26,6 +29,11 @@ async function find(id) {
     return book;
 }
 
+async function findBy(properties) {
+    var book = await Book.findOne(properties).exec();
+    return book;
+}
+
 async function remove(book) {
     await Book.findOneAndUpdate({ _id: book._id }, { status: 'DELETED' });
 }
@@ -33,6 +41,7 @@ async function remove(book) {
 BookRepository.prototype.save = save;
 BookRepository.prototype.findAll = findAll;
 BookRepository.prototype.find = find;
+BookRepository.prototype.findBy = findBy;
 BookRepository.prototype.remove = remove;
 
 module.exports = BookRepository;
